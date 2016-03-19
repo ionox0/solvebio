@@ -1,0 +1,8 @@
+<select id='gene-select'
+        ng-model='ctrl.selectedGene'
+        ng-options='gene for gene in ctrl.genesList'
+        ng-change='ctrl.chooseGene(ctrl.selectedGene)'></select>
+
+<ideogram gene-data='ctrl.geneData'></ideogram>
+
+<div>{{ ctrl.geneData }}</div>

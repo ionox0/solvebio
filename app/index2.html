@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+
+
+  <!-- Scatterplot axis styles -->
+  <style type="text/css">
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: black;
+      shape-rendering: crispEdges;
+    }
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 11px;
+    }
+
+  </style>
+
+
+
+
+
+</head>
+<body ng-app="App">
+
+<div ui-view></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+<script src="/services/d3-service.js"></script>
+
+<script>
+
+//  var svg = d3.select("body")
+//    .append("svg")
+//    .attr("width", 500)
+//    .attr("height", 500);
+//
+//
+//
+//
+//
+//
+//  // Circles
+//  var dataset = [ 5, 10, 15, 20, 25 ];
+//  var w = 500;
+//  var h = 50;
+//
+//  var circles = svg.selectAll("circle")
+//    .data(dataset)
+//    .enter()
+//    .append("circle");
+//
+//  circles.attr("cx", function(d, i) {
+//      return (i * 50) + 25;
+//    })
+//
+//    .attr("cy", h/2)
+//    .attr("r", function(d) {
+//      return d;
+//    })
+//
+//    .attr("fill", "yellow")
+//    .attr("stroke", "orange")
+//    .attr("stroke-width", function(d) {
+//      return d/2;
+//    })
+//
+//    .attr("fill", "yellow")
+//    .attr("stroke", "orange")
+//    .attr("stroke-width", function(d) {
+//      return d/2;
+//    });
+//
+//
+//
+//
+//
+//  // Histogram
+//  var barPadding = 1;
+//  var dataset2 = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+//    11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+//
+//  svg.selectAll("rect")
+//    .data(dataset2)
+//    .enter()
+//    .append("rect")
+//    .attr("x", function(d, i) {
+//      return i * (w / dataset2.length);
+//    })
+//    .attr("y", function(d) {
+//      return h - (d * 4) + 150;
+//    })
+//    .attr("width", w / dataset2.length - barPadding)
+//    .attr("height", function(d) {
+//      return d * 4;
+//    })
+//    .attr("fill", function(d) {
+//      return "rgb(0, 0, " + (d * 10) + ")";
+//    });
+//
+//
+//
+//
+//
+//
+//  // Scatterplot
+//  //Width and height
+//  var w = 500;
+//  var h = 300;
+//  var padding = 30;
+//
+//  //Static dataset
+//  var dataset = [
+//    [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
+//    [410, 12], [475, 44], [25, 67], [85, 21], [220, 88],
+//    [600, 150]
+//  ];
+//
+//  //Dynamic, random dataset
+////  var dataset = [];					//Initialize empty array
+////  var numDataPoints = 50;				//Number of dummy data points to create
+////  var xRange = Math.random() * 1000;	//Max range of new x values
+////  var yRange = Math.random() * 1000;	//Max range of new y values
+////  for (var i = 0; i < numDataPoints; i++) {					//Loop numDataPoints times
+////    var newNumber1 = Math.round(Math.random() * xRange);	//New random integer
+////    var newNumber2 = Math.round(Math.random() * yRange);	//New random integer
+////    dataset.push([newNumber1, newNumber2]);					//Add new number to array
+////  }
+//
+//  //Create scale functions
+//  var xScale = d3.scale.linear()
+//    .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+//    .range([padding, w - padding * 2]);
+//
+//  var yScale = d3.scale.linear()
+//    .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+//    .range([h - padding, padding]);
+//
+//  var rScale = d3.scale.linear()
+//    .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+//    .range([2, 5]);
+//
+//  //Define X axis
+//  var xAxis = d3.svg.axis()
+//    .scale(xScale)
+//    .orient("bottom")
+//    .ticks(5);
+//
+//  //Define Y axis
+//  var yAxis = d3.svg.axis()
+//    .scale(yScale)
+//    .orient("left")
+//    .ticks(5);
+//
+//  //Create SVG element
+//  var svg = d3.select("body")
+//    .append("svg")
+//    .attr("width", w)
+//    .attr("height", h);
+//
+//  //Create circles
+//  svg.selectAll("circle")
+//    .data(dataset)
+//    .enter()
+//    .append("circle")
+//    .attr("cx", function(d) {
+//      return xScale(d[0]);
+//    })
+//    .attr("cy", function(d) {
+//      return yScale(d[1]);
+//    })
+//    .attr("r", function(d) {
+//      return rScale(d[1]);
+//    });
+//
+//
+//  //Create labels
+//  svg.selectAll("text")
+//
+//    .data(dataset)
+//
+//    .enter()
+//
+//    .append("text")
+//
+//    .text(function(d) {
+//      return d[0] + "," + d[1];
+//    })
+//
+//    .attr("x", function(d) {
+//      return xScale(d[0]);
+//    })
+//
+//    .attr("y", function(d) {
+//      return yScale(d[1]);
+//    })
+//
+//    .attr("font-family", "sans-serif")
+//    .attr("font-size", "11px")
+//    .attr("fill", "red");
+//
+//
+//  //Create X axis
+//  svg.append("g")
+//    .attr("class", "axis")
+//    .attr("transform", "translate(0," + (h - padding) + ")")
+//    .call(xAxis);
+//
+//  //Create Y axis
+//  svg.append("g")
+//    .attr("class", "axis")
+//    .attr("transform", "translate(" + padding + ",0)")
+//    .call(yAxis);
+//
+//
+//
+//
+//  //border radius rect
+//
+//  var rect = svg.append("rect")
+//    .style('width', '100%')
+//    .style('height', '100%')
+////    .style('rx', '20')
+////    .style('ry', '20');
+//
+
+
+
+  function rightRoundedRect(x, y, width, height, radius) {
+    a = "M" + x + "," + y
+      + "h" + (width - radius)
+      + "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius
+      + "v" + (height - 2 * radius)
+      + "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius
+      + "h" + (radius - width)
+      + "z";
+    console.log(a);
+    return a;
+  }
+
+  var dataset2 = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+    11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+
+  var svg = d3.select("body").append("svg")
+    .attr("width", 960)
+    .attr("height", 500)
+    .append("g")
+    .attr("transform", "translate(480,250)");
+
+  svg.selectAll("rect")
+    .data(dataset2)
+    .enter()
+    .append("path")
+    .attr("d", rightRoundedRect(-240, -120, 480, 240, 20));
+
+
+
+
+</script>
+</body>
+</html>
